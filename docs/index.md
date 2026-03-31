@@ -36,22 +36,3 @@
 3. Add your third converted article and place it in the navigation.
 4. Push to GitHub and connect the repo to your docs domain.
 
-## Run locally
-
-=== "Install"
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-=== "Preview"
-
-    ```bash
-    mkdocs serve
-    ```
-
-=== "Open"
-
-    ```text
-    http://127.0.0.1:8000
-    ```
