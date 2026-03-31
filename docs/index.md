@@ -55,8 +55,3 @@
     ```text
     http://127.0.0.1:8000
     ```
-
-## Recommended next cleanup
-
-!!! tip
-    Once you send me the third Zoho KB article, I can convert it into the same style and slot it into this repo with matching navigation, formatting, and callouts.
