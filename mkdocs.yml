@@ -24,14 +24,14 @@ theme:
     - search.share
   palette:
     - scheme: default
-      primary: blue
-      accent: blue
+      primary: blue grey
+      accent: blue grey
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - scheme: slate
-      primary: blue
-      accent: blue
+      primary: blue grey
+      accent: blue grey
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
