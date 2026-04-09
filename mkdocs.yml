@@ -41,7 +41,14 @@ nav:
   - Developer Docs:
       - Getting Started: developer/getting-started.md
       - GPA Report Integration Guide: developer/gpa-report-integration-guide.md
-      - Webhooks: developer/webhooks.md
+      - Webhooks:
+          - Section Home: developer/webhooks.md
+          - Overview: developer/webhooks/overview.md
+          - Events Reference: developer/webhooks/events-reference.md
+          - PDF Delivery Events: developer/webhooks/pdf-delivery-events.md
+          - TargetX / Salesforce File Delivery: developer/webhooks/targetx-salesforce-file-delivery.md
+      - Integrations:
+          - Slate Integration Setup: developer/integrations/slate-integration-setup.md
 
 markdown_extensions:
   - admonition

@@ -2,6 +2,8 @@
 
 The Scholaro GPA Report integration supports multiple submission methods depending on how your team receives and processes transcripts.
 
+> Note: If you are configuring downstream file delivery or event-based processing, see the [Webhooks](webhooks.md) section and the [Slate Integration Setup](integrations/slate-integration-setup.md) guide.
+
 ## Integration methods
 
 === "Single API"
@@ -38,8 +40,10 @@ https://www.scholaro.com/app/developer/webhooks
 ### Endpoint
 
 ```http
-POST https://www.scholaro.com/appAPI/api/gpa-report/new
+POST https://www.scholaro.com/appAPI/api/gpa-report
 ```
+
+> Note: For single GPA report requests, use the current `POST /appAPI/api/gpa-report` endpoint. Do not use the older `/new` path.
 
 ### Request format
 
@@ -59,7 +63,7 @@ Send data as `multipart/form-data`.
 ### Example request
 
 ```bash
-curl -X POST https://www.scholaro.com/appAPI/api/gpa-report/new \
+curl -X POST https://www.scholaro.com/appAPI/api/gpa-report \
   -H "X-API-Key: your_api_key_here" \
   -F "country=India" \
   -F "applicant_name=Jane Smith" \
@@ -68,6 +72,8 @@ curl -X POST https://www.scholaro.com/appAPI/api/gpa-report/new \
 ```
 
 ### Example response
+
+The response includes report metadata, GPA totals, and the `grades` array for the evaluated coursework.
 
 ```json
 {
@@ -82,7 +88,14 @@ curl -X POST https://www.scholaro.com/appAPI/api/gpa-report/new \
     "total_credits": 0.0,
     "total_points": 0.0,
     "gpa": 0.0,
-    "grades": []
+    "grades": [
+  {
+    "class": "string",
+    "grade_points": 0.0,
+    "credits": 0.0,
+    "grade": "string"
+  }
+]
   }
 }
 ```

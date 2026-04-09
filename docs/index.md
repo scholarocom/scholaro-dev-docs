@@ -1,8 +1,8 @@
 # Scholaro Developer Docs
 
 <div class="hero-card">
-  <p><strong>Build Scholaro integrations faster.</strong> This docs starter is structured for institutional developers who need GPA report APIs, batch upload guidance, and webhook setup in one place.</p>
-  <p><a href="developer/getting-started/">Start with Getting Started</a> or jump straight to the <a href="developer/gpa-report-integration-guide/">integration guide</a>.</p>
+  <p><strong>Build Scholaro integrations faster.</strong> This docs portal is structured for institutional developers who need GPA report API guidance, webhook event documentation, and integration setup instructions for connected systems.</p>
+  <p><a href="developer/getting-started/">Start with Getting Started</a>, review the <a href="developer/webhooks/">webhooks docs</a>, or open the <a href="developer/integrations/slate-integration-setup/">Slate Integration Setup</a>.</p>
 </div>
 
 ## What is included
@@ -25,6 +25,12 @@
 
     ---
 
-    Covers supported events, payload structure, signature verification, and implementation best practices.
+    Covers webhook event references, PDF delivery behavior, and destination-specific setup guidance.
+
+-   **Integrations**
+
+    ---
+
+    Implementation guides for connected systems such as Slate, with setup steps and configuration flow documentation.
 
 </div>

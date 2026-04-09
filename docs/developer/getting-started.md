@@ -2,6 +2,8 @@
 
 This page is the fastest starting point for institutional developers integrating Scholaro GPA reports into their own systems.
 
+> Note: If you need event-based delivery or downstream system setup, see the [Webhooks](webhooks.md) section and the [Slate Integration Setup](integrations/slate-integration-setup.md) guide.
+
 ## Choose an integration method
 
 | Method | Best for | Response pattern |
@@ -82,3 +84,4 @@ Use this when you:
 
 - [GPA Report Integration Guide](gpa-report-integration-guide.md)
 - [Webhooks](webhooks.md)
+- [Slate Integration Setup](integrations/slate-integration-setup.md)
