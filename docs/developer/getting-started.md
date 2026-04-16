@@ -1,4 +1,4 @@
-# Getting Started - Tyler Test
+# Getting Started
 
 This page is the fastest starting point for institutional developers integrating Scholaro GPA reports into their own systems.
 
