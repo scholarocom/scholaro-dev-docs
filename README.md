@@ -1,4 +1,4 @@
-# Scholaro Developer Docs
+# Scholaro Developer Documentation
 
 Internal repository for Scholaro developer documentation.
 
