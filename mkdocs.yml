@@ -53,6 +53,7 @@ nav:
           - Slate Integration Setup: developer/integrations/slate-integration-setup.md
       - Single Sign-On (SSO):
           - Overview: developer/sso.md
+          - Setting Up SSO in Scholaro: developer/sso/self-service-setup.md
           - Microsoft Entra ID: developer/sso/entra-id-setup.md
           - Google Workspace: developer/sso/google-workspace-setup.md
           - Okta: developer/sso/okta-setup.md
