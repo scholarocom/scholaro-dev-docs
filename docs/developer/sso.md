@@ -19,9 +19,10 @@ Scholaro supports both **OpenID Connect (OIDC)** and **SAML 2.0**, so any standa
 You set SSO up yourself, under **Settings → SSO** in Scholaro. The high-level process is:
 
 1. **Request your email domains.** Scholaro verifies that your organization controls each domain before approving it. This is the one step that waits on us.
-2. **Add a connection.** Choose OIDC or SAML and enter the details from your identity provider.
-3. **Register Scholaro in your IdP.** Your connection's page lists the exact URLs to use. See the provider-specific guide below.
-4. **Switch it on** and sign in with a test account from your domain.
+2. **Create the application in your IdP** and copy its details. See the provider-specific guide below.
+3. **Add a connection** in Scholaro. Choose OIDC or SAML and enter those details.
+4. **Give your IdP Scholaro's URLs.** Your connection's page lists the exact ones to use.
+5. **Turn it on** and sign in with a test account from your domain.
 
 [Full walkthrough of the Scholaro side →](sso/self-service-setup.md)
 
@@ -45,13 +46,15 @@ Start with [Setting up SSO in Scholaro](sso/self-service-setup.md), then follow 
 - **OpenID Connect (OIDC) and SAML 2.0** identity providers.
 - **Email-domain routing** — users are sent to the right IdP automatically based on their email address.
 - **Just-in-time provisioning** — Scholaro accounts are created on first sign-in.
-- **Automatic deprovisioning** — when you disable a user at your IdP, their Scholaro access is revoked within the re-authentication interval.
+- **Automatic deprovisioning** — every SSO session must re-authenticate with your IdP after 24 hours. For OIDC providers that issue refresh tokens, Scholaro also checks with your provider about every 15 minutes and ends the session of a user you have disabled.
 - **Custom attribute mapping** — if your IdP sends email or name under non-standard attribute names, you can map them on the connection.
-- **Self-service setup** — configure, test, and switch connections on and off yourself, without waiting on a Scholaro release.
+- **Self-service setup** — configure, test, and turn connections on and off yourself, without waiting on a Scholaro release.
 
 ## Limitations
 
 - **Domains must be approved by Scholaro.** Claiming a domain decides where every sign-in on it is routed, so we verify that you control it first. Everything after that is in your hands.
-- **One identity provider per email domain.**
+- **One identity provider per email domain, and one domain per connection.** Domains match exactly; each subdomain needs its own connection.
 - **One protocol per connection.** OIDC or SAML is fixed when the connection is created, because it forms part of the URLs you register with your provider.
-- **SCIM is not supported.** User deprovisioning takes effect at the next re-authentication rather than instantly through directory sync.
+- **SCIM is not supported.** Deprovisioning is not instant: SAML sessions end at the 24-hour re-authentication, and OIDC sessions within about 15 minutes when your provider issues refresh tokens.
+- **No single sign-out.** Signing out of Scholaro does not sign users out of your IdP.
+- **SAML metadata must be a URL.** Scholaro cannot accept an uploaded metadata file or certificate.

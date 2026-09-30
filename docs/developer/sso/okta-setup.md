@@ -2,12 +2,12 @@
 
 This guide explains how to connect **Okta** to Scholaro using OpenID Connect (OIDC).
 
-Before you start, create the connection in Scholaro — see [Setting up SSO in Scholaro](self-service-setup.md). That is where the Redirect URI below comes from, and it does not exist until the connection is saved.
+Read [Setting up SSO in Scholaro](self-service-setup.md) first. You will create the app here, create the connection in Scholaro with its credentials, then come back to add Scholaro's Redirect URI — it does not exist until the connection is saved.
 
 ## Prerequisites
 
 - Administrator access to your Okta org (the Admin Console, e.g. `https://<your-org>-admin.okta.com`).
-- The **Redirect URI** from your connection's page in Scholaro. It looks like:
+- Later, the **Redirect URI** from your connection's **Setup URLs** page in Scholaro. It looks like:
 
     `https://www.scholaro.com/login/sso/<your-connection>/callback`
 
@@ -34,9 +34,9 @@ Click **Next**.
 On the **New Web App Integration** screen:
 
 - **App integration name**: `Scholaro SSO` (or any name your team will recognize).
-- **Grant type**: leave **Authorization Code** selected.
-- **Sign-in redirect URIs**: paste the Redirect URI from your connection's page.
-- **Sign-out redirect URIs**: paste the Post-logout redirect URI from the same page. Optional.
+- **Grant type**: leave **Authorization Code** selected, and also tick **Refresh Token** so Scholaro can detect users you deactivate.
+- **Sign-in redirect URIs**: paste Scholaro's Redirect URI if the connection already exists; otherwise leave the default and replace it in step 6.
+- **Sign-out redirect URIs**: optional. Scholaro does not yet sign users out of Okta.
 
 ![Web app integration settings](../images/sso/okta-app-settings.png)
 
@@ -56,7 +56,7 @@ On the application's **General** tab, copy:
 ![Client ID and client secret](../images/sso/okta-client-credentials.png)
 
 !!! warning
-    Send the client secret to Scholaro through a secure channel.
+    Paste the client secret straight into your Scholaro connection rather than sending it anywhere. Scholaro stores it encrypted and never displays it back.
 
 ---
 
@@ -65,13 +65,13 @@ On the application's **General** tab, copy:
 Your Okta **issuer** is your org URL, for example `https://<your-org>.okta.com`. You can confirm it by opening `https://<your-org>.okta.com/.well-known/openid-configuration` and reading the `issuer` value.
 
 !!! note
-    Scholaro requests the standard OpenID Connect scopes (`openid`, `profile`, `email`, and `offline_access`), which Okta grants to OIDC apps by default — there is nothing extra to configure.
+    Scholaro requests the standard OpenID Connect scopes (`openid`, `profile`, `email`, and `offline_access`). Okta issues a refresh token for `offline_access` only when the **Refresh Token** grant type is ticked (step 2); without it sign-in still works, but deactivated users keep access until their 24-hour session ends.
 
 ---
 
-## 5. Enter your details in Scholaro
+## 5. Create the connection in Scholaro
 
-Open your connection under **Settings -> SSO** and fill in:
+Under **Settings → SSO**, choose **Add connection**, pick **OpenID Connect**, and fill in:
 
 | Field | Value |
 | --- | --- |
@@ -80,15 +80,21 @@ Open your connection under **Settings -> SSO** and fill in:
 | Client secret | Application -> General tab |
 | Scopes | Leave blank |
 
-Scholaro stores the client secret encrypted and never displays it back. Save, then assign your users to the application in Okta.
+Save.
 
 ---
 
-## 6. Switch it on and test
+## 6. Add Scholaro's Redirect URI to Okta
 
-Use the switch at the top of your connection's page, then sign in with an address in your domain. You should be redirected to Okta and returned to Scholaro signed in.
+Open **Setup URLs** on the connection, copy the **Redirect URI**, and paste it into the app's **Sign-in redirect URIs** in Okta, replacing the default. Save, then make sure your users are assigned to the application.
+
+---
+
+## 7. Turn it on and test
+
+Use the **Turn on** button at the top of your connection's page, then sign in with an address in your domain. You should be redirected to Okta and returned to Scholaro signed in.
 
 !!! tip
     If sign-in fails, check that the Sign-in redirect URI in Okta matches the one on your connection's page exactly, and that your test user is assigned to the app.
 
-If anything is wrong, switch the connection off. Sign-in returns to normal immediately.
+If anything is wrong, turn the connection off. Sign-in returns to normal immediately.

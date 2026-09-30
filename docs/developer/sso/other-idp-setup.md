@@ -2,7 +2,7 @@
 
 Scholaro works with any identity provider that supports **OpenID Connect (OIDC)** or **SAML 2.0** — including OneLogin, Ping, ADFS, Shibboleth, and others.
 
-Before you start, create the connection in Scholaro — see [Setting up SSO in Scholaro](self-service-setup.md). The URLs below come from your connection's page and do not exist until it is saved. Use the tab that matches the protocol your identity provider uses.
+Read [Setting up SSO in Scholaro](self-service-setup.md) first. The URLs below come from your connection's **Setup URLs** page and do not exist until it is saved, so create the application in your provider, save the connection in Scholaro with its details, then come back and enter the URLs. Use the tab that matches the protocol your identity provider uses.
 
 === "OIDC"
 
@@ -14,22 +14,23 @@ Before you start, create the connection in Scholaro — see [Setting up SSO in S
 
     `https://www.scholaro.com/login/sso/oidc-12/callback`
 
-    Your connection also offers a post-logout redirect URI and a front-channel logout URI. Both are optional and drive single sign-out only.
+    Your connection also offers a post-logout redirect URI and a front-channel logout URI. Both are optional; Scholaro does not yet sign users out of your provider.
 
     **2. Configure scopes**
 
-    Make sure the application can return the **openid**, **profile**, and **email** scopes. If your provider supports **offline_access**, include it so Scholaro can detect when a user is later disabled at the IdP.
+    Make sure the application can return the **openid**, **profile**, and **email** scopes. Scholaro always also requests **offline_access**, so your provider must accept it or ignore it; if it issues a refresh token, Scholaro can detect within about 15 minutes when a user is disabled at the IdP.
 
     **3. Enter the details in Scholaro**
 
     | Field | Notes |
     | --- | --- |
-    | Authority | The provider's OIDC issuer; its discovery document must be at `<issuer>/.well-known/openid-configuration` |
+    | Authority | The provider's OIDC issuer, starting `https://`; its discovery document must be at `<issuer>/.well-known/openid-configuration` |
     | Client ID | From the application you registered |
     | Client secret | Stored encrypted, never displayed back |
     | Scopes | Leave blank unless your provider needs something beyond the standard set |
+    | Email claim type / Name claim type | Only if your provider uses non-standard claims |
 
-    **4. Switch the connection on** and sign in with an address on your domain.
+    **4. Add the Redirect URI** from the connection's **Setup URLs** page to your application, then **turn the connection on** and sign in with an address on your domain.
 
 === "SAML 2.0"
 
@@ -54,12 +55,12 @@ Before you start, create the connection in Scholaro — see [Setting up SSO in S
 
     | Field | Notes |
     | --- | --- |
-    | IdP metadata URL | Must be reachable from the internet. Scholaro re-reads it, so certificate rotations are picked up automatically |
+    | IdP metadata URL | An `https://` URL reachable from the internet — Scholaro loads your signing certificate from it and cannot accept an uploaded file |
     | IdP Entity ID | The identity provider's issuer / entity ID |
     | Email claim type | Only if your provider uses a non-standard attribute for the email address |
     | Name claim type | Only if your provider uses a non-standard attribute for the name |
 
-    **4. Switch the connection on** and sign in with an address on your domain.
+    **4. Enter the ACS URL and SP Entity ID** from the connection's **Setup URLs** page in your provider, then **turn the connection on** and sign in with an address on your domain.
 
 !!! note
     The Redirect URI, ACS URL, and SP Entity ID shown above are **examples**. Always use the exact values on your own connection's page — the number in them is unique to it.
