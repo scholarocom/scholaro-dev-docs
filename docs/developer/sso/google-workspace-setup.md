@@ -2,12 +2,15 @@
 
 This guide explains how to connect **Google Workspace** to Scholaro using a custom SAML application — the standard way to set up SSO for a third-party app in the Google Admin console.
 
-Before you start, read the [SSO overview](../sso.md) for how the managed setup process works.
+Read [Setting up SSO in Scholaro](self-service-setup.md) first. The ACS URL and SP Entity ID below come from your connection's **Setup URLs** page, and they do not exist until the connection is saved.
+
+!!! warning "Google provides metadata as a file, not a URL"
+    Scholaro reads your identity provider's metadata from an `https://` URL and cannot accept an uploaded file. Google Workspace only offers the metadata as a download, so to set this up yourself you need to host the downloaded XML at an `https://` address Scholaro can reach. If that is not practical, ask your Scholaro representative to set the connection up for you.
 
 ## Prerequisites
 
 - A **super administrator** account for your Google Workspace domain ([admin.google.com](https://admin.google.com)).
-- The **ACS URL** and **SP Entity ID** Scholaro provided for your connection. They look like:
+- The **ACS URL** and **SP Entity ID** from your connection's **Setup URLs** page in Scholaro. They look like:
 
     - ACS URL: `https://www.scholaro.com/login/sso/<your-connection>/Acs`
     - SP Entity ID: `https://www.scholaro.com/login/sso/<your-connection>/Saml2`
@@ -32,7 +35,7 @@ Click **Continue**.
 
 ## 2. Copy Google's identity provider details
 
-On the **Google Identity Provider details** step, **download the IdP metadata** (recommended) and note the values Scholaro will need:
+On the **Google Identity Provider details** step, **download the IdP metadata** and note:
 
 - **SSO URL**
 - **Entity ID**
@@ -46,7 +49,7 @@ Click **Continue**.
 
 ## 3. Enter Scholaro's service-provider details
 
-On the **Service provider details** step, enter the values Scholaro provided:
+On the **Service provider details** step, enter the values from your connection's **Setup URLs** page. If you have not created the connection yet, enter a temporary value, finish the wizard, and come back to **Service provider details** after step 6:
 
 - **ACS URL**: the ACS URL from Scholaro.
 - **Entity ID**: the SP Entity ID from Scholaro.
@@ -64,7 +67,8 @@ Click **Continue**.
 On the **Attributes** step you can map Google directory fields to the claims Scholaro reads, for example:
 
 - *Primary email* -> `email`
-- *First name* / *Last name* -> `name`
+- *First name* -> `given_name`
+- *Last name* -> `family_name`
 
 The user's email is already carried by the Name ID, so attribute mapping is usually optional. Click **Finish**.
 
@@ -81,23 +85,27 @@ A new app is **OFF for everyone** by default. Open the app, click **User access*
 
 ---
 
-## 6. Send Scholaro your connection details
+## 6. Create the connection in Scholaro
 
-Provide the following to your Scholaro representative:
+Under **Settings → SSO**, choose **Add connection**, pick **SAML 2.0**, and fill in:
 
-| Value | Where to find it |
+| Field | Value |
 | --- | --- |
-| IdP metadata URL or metadata XML | Downloaded in step 2 |
-| IdP Entity ID | Google Identity Provider details (step 2) |
-| Email domain(s) | Your Workspace domain, e.g. `university.edu` |
+| IdP Entity ID | The **Entity ID** from Google Identity Provider details (step 2) |
+| IdP metadata URL | The `https://` address where you host the metadata file downloaded in step 2 |
 
-Scholaro enables the connection and confirms when it is ready.
+Save, then make sure the ACS URL and Entity ID in Google match the connection's **Setup URLs** page.
+
+!!! note "When Google's certificate changes"
+    When you renew the signing certificate in Google, download the new metadata and replace the hosted file.
 
 ---
 
-## 7. Test sign-in
+## 7. Turn it on and test
 
-Go to the Scholaro sign-in page, enter an email address in your domain, and confirm you are redirected to Google to authenticate and returned to Scholaro signed in.
+Use the **Turn on** button at the top of your connection's page, then sign in with an address in your domain. You should be redirected to Google and returned to Scholaro signed in.
 
 !!! tip
-    If sign-in fails, confirm the app is turned **ON** for the test user's organizational unit and that the ACS URL and Entity ID exactly match the values Scholaro provided.
+    If sign-in fails, confirm the app is turned **ON** for the test user's organizational unit, and that the ACS URL and Entity ID in Google match your connection's page exactly.
+
+If anything is wrong, turn the connection off. Sign-in returns to normal immediately.
