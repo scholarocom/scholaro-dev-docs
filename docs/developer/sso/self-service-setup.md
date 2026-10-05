@@ -98,7 +98,8 @@ Open **Setup URLs** on the connection you just saved. It lists the URLs to give 
     | SP Entity ID | *Audience URI (SP Entity ID)*, or *Identifier (Entity ID)* in Entra |
     | ACS URL | *Single sign-on URL*, or *Reply URL* in Entra |
     | SP metadata URL | Scholaro's own metadata — some providers can import this instead of the two values above |
-    | Login launch URL | The direct sign-in link, if you set a Login URL name |
+
+For either protocol, if you set a **Login URL name**, the page also shows a **Login launch URL** — the direct sign-in link to put on your intranet. Your provider does not need it.
 
 Paste each into the application you created in step 2, replacing any temporary value. The guides for [Microsoft Entra ID](entra-id-setup.md), [Google Workspace](google-workspace-setup.md), [Okta](okta-setup.md), and [other providers](other-idp-setup.md) show where each one goes.
 
