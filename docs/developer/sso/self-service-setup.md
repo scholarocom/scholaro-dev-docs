@@ -1,34 +1,23 @@
 # Setting Up SSO in Scholaro
 
-This page covers the Scholaro side of an SSO connection: claiming your email domains, creating the connection, and turning it on. The [provider guides](../sso.md#set-up-sso-with-your-identity-provider) cover the other side — registering Scholaro in your identity provider.
+This page covers the Scholaro side of an SSO connection: creating the connection and turning it on. The [provider guides](../sso.md#set-up-sso-with-your-identity-provider) cover the other side — registering Scholaro in your identity provider.
 
 You will move between the two, because each needs a value from the other: Scholaro needs your provider's details to save a connection, and your provider needs the URLs Scholaro generates once it is saved. The order below is the one that works.
 
 ## Prerequisites
 
-- An **administrator** account in Scholaro. The **Settings** menu, including **SSO**, is shown only to administrators, and only they can request domains or change connections.
-- SSO enabled for your organization. If you do not see **SSO** in your settings menu, contact your Scholaro representative.
+- **Onboarding with Scholaro.** To get started, email support or your Scholaro representative with the email domains your members sign in with. We verify that your organization controls them, turn SSO on for your account, and approve the domains for you.
+- An **administrator** account in Scholaro. The **Settings** menu, including **SSO**, is shown only to administrators, and only they can change connections or request more domains.
+
+If you do not see **SSO** in your settings menu, it has not been turned on for your organization yet — contact your Scholaro representative.
 
 ---
 
-## 1. Request your email domains
+## 1. Check your approved domains
 
-Go to **Settings → SSO → Domains** and enter the email domains your members sign in with — for example `university.edu`. You can enter several at once, separated by commas, spaces or semicolons, or one per line.
+Go to **Settings → SSO → Domains**. The domains Scholaro approved for you during onboarding are listed as **Approved**, and each one can have a connection.
 
-Each domain matches exactly. A subdomain such as `mail.university.edu` is a separate domain and needs its own request and connection.
-
-Scholaro reviews each request and verifies that your organization controls the domain before approving it. This is what stops a domain being claimed by anyone else, so it is a manual step and not an instant one.
-
-You can watch the status on the same page:
-
-| Status | What it means |
-| --- | --- |
-| **Pending review** | Submitted, waiting on Scholaro |
-| **Approved** | Ready to use for a connection |
-| **Rejected** | Not approved — any note from Scholaro is shown in the Notes column |
-
-!!! note "Public email providers are not eligible"
-    Domains such as `gmail.com` or `outlook.com` cannot be used for SSO. Use your institution's own domain.
+Each domain matches exactly. A subdomain such as `mail.university.edu` is a separate domain and needs its own approval and connection. To add one, see [Adding more domains later](#adding-more-domains-later).
 
 ---
 
@@ -59,7 +48,8 @@ Fill in the details from your provider and save. The fields differ by protocol:
     | Client ID | Required. From your provider |
     | Client secret | Required. From your provider. Stored encrypted and never displayed again |
     | Scopes | Optional — leave blank for `openid profile email`. Scholaro always adds `openid` and `offline_access` |
-    | Email claim type / Name claim type | Optional — only if your provider sends the email or name under a non-standard claim |
+    | Email claim type | Optional — only if your provider sends the email address under a non-standard claim |
+    | Name claim type | Not used yet — leave blank. Scholaro does not currently save names from your provider |
 
 === "SAML 2.0"
 
@@ -68,7 +58,8 @@ Fill in the details from your provider and save. The fields differ by protocol:
     | Email domain | Chosen from your approved domains |
     | IdP Entity ID | Required. From your provider |
     | IdP metadata URL | Required. An `https://` URL reachable from the internet. Scholaro cannot accept an uploaded metadata file or certificate |
-    | Email claim type / Name claim type | Optional — only if your provider sends the email or name under a non-standard attribute |
+    | Email claim type | Optional — only if your provider sends the email address under a non-standard attribute |
+    | Name claim type | Not used yet — leave blank. Scholaro does not currently save names from your provider |
 
 **Login URL name** is optional. Set it to get a direct sign-in link, such as `https://www.scholaro.com/login/sso/acme`, that you can put on your intranet to send members straight to your identity provider. It must be 3–63 characters of lowercase letters, numbers and single hyphens, and the link works only while the connection is on.
 
@@ -101,6 +92,8 @@ Open **Setup URLs** on the connection you just saved. It lists the URLs to give 
 
 For either protocol, if you set a **Login URL name**, the page also shows a **Login launch URL** — the direct sign-in link to put on your intranet. Your provider does not need it.
 
+These URLs are available as soon as the connection is saved, while it is still off. The SP metadata URL already serves Scholaro's metadata, so a provider that imports it can do so now. Nothing is routed to your identity provider until you turn the connection on in step 5: until then, sign-ins on your domain and the Login launch URL go to the normal Scholaro sign-in page.
+
 Paste each into the application you created in step 2, replacing any temporary value. The guides for [Microsoft Entra ID](entra-id-setup.md), [Google Workspace](google-workspace-setup.md), [Okta](okta-setup.md), and [other providers](other-idp-setup.md) show where each one goes.
 
 Assign the application to the users who should have access before you continue.
@@ -128,6 +121,23 @@ The sequence is always: turn off → make the change → turn back on. Deleting 
     OIDC client secrets have an expiry date set by your identity provider, and **sign-in stops working when one expires**. Note the date when you create it. To rotate: create the new secret in your provider, then turn the connection off, paste the new value, and turn it back on.
 
 Leaving the client secret field blank when editing keeps the stored one. It is never displayed again after saving.
+
+---
+
+## Adding more domains later
+
+To use SSO on a domain Scholaro has not approved yet, go to **Settings → SSO → Domains** and request it. You can enter several at once, separated by commas, spaces or semicolons, or one per line.
+
+Scholaro verifies that your organization controls each domain before approving it. This is what stops a domain being claimed by anyone else, so it is a manual step and not an instant one. You can watch the status on the same page:
+
+| Status | What it means |
+| --- | --- |
+| **Pending review** | Submitted, waiting on Scholaro |
+| **Approved** | Ready to use for a connection |
+| **Rejected** | Not approved — any note from Scholaro is shown in the Notes column |
+
+!!! note "Public email providers are not eligible"
+    Domains such as `gmail.com` or `outlook.com` cannot be used for SSO. Use your institution's own domain.
 
 ---
 

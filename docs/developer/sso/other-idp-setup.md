@@ -28,7 +28,8 @@ Read [Setting up SSO in Scholaro](self-service-setup.md) first. The URLs below c
     | Client ID | From the application you registered |
     | Client secret | Stored encrypted, never displayed back |
     | Scopes | Leave blank unless your provider needs something beyond the standard set |
-    | Email claim type / Name claim type | Only if your provider uses non-standard claims |
+    | Email claim type | Only if your provider sends the email address under a non-standard claim |
+    | Name claim type | Not used yet — leave blank |
 
     **4. Add the Redirect URI** from the connection's **Setup URLs** page to your application, then **turn the connection on** and sign in with an address on your domain.
 
@@ -49,7 +50,7 @@ Read [Setting up SSO in Scholaro](self-service-setup.md) first. The URLs below c
 
     **2. Confirm the email attribute**
 
-    Ensure the assertion includes the user's email — as the Name ID or as an attribute. If your IdP uses a non-standard attribute name (for example the eduPerson / LDAP OID `urn:oid:0.9.2342.19200300.100.1.3` for email), note which attribute carries the email and name so Scholaro can map them.
+    Ensure the assertion includes the user's email — as the Name ID (`EMAIL` format) or as an attribute. Scholaro already recognizes the standard email attributes, including the eduPerson / LDAP mail OID `urn:oid:0.9.2342.19200300.100.1.3`. If your IdP uses a different attribute, note its name so you can set **Email claim type** on the connection.
 
     **3. Enter the details in Scholaro**
 
@@ -58,7 +59,7 @@ Read [Setting up SSO in Scholaro](self-service-setup.md) first. The URLs below c
     | IdP metadata URL | An `https://` URL reachable from the internet — Scholaro loads your signing certificate from it and cannot accept an uploaded file |
     | IdP Entity ID | The identity provider's issuer / entity ID |
     | Email claim type | Only if your provider uses a non-standard attribute for the email address |
-    | Name claim type | Only if your provider uses a non-standard attribute for the name |
+    | Name claim type | Not used yet — leave blank |
 
     **4. Enter the ACS URL and SP Entity ID** from the connection's **Setup URLs** page in your provider, then **turn the connection on** and sign in with an address on your domain.
 
