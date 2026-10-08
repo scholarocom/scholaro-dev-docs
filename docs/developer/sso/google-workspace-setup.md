@@ -62,15 +62,9 @@ Click **Continue**.
 
 ---
 
-## 4. Map attributes (optional)
+## 4. Skip attribute mapping
 
-On the **Attributes** step you can map Google directory fields to the claims Scholaro reads, for example:
-
-- *Primary email* -> `email`
-- *First name* -> `given_name`
-- *Last name* -> `family_name`
-
-The user's email is already carried by the Name ID, so attribute mapping is usually optional. Click **Finish**.
+On the **Attributes** step, no mapping is needed: the user's email is already carried by the Name ID, and Scholaro does not currently import names from Google. Click **Finish**.
 
 ---
 
