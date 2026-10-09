@@ -6,10 +6,12 @@ Scholaro supports PDF delivery workflows for specific GPA report and digital eva
 
 The following events are supported for PDF delivery:
 
-- `gpa_report.created`
-- `gpa_report.updated`
-- `digital_evaluation.created`
-- `digital_evaluation.updated`
+- `gpa_report.created (pdf)`
+- `gpa_report.updated (pdf)`
+- `digital_evaluation.created (pdf)`
+- `digital_evaluation.updated (pdf)`
+
+These are listed separately from the `(data)` events on the Scholaro webhook page. See the [Events Reference](events-reference.md) for the event code behind each one.
 
 ## How it works
 
