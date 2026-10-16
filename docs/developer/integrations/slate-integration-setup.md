@@ -106,6 +106,7 @@ Go to the **Format Definition** tab and enter the following XML, then click **Sa
 
 ```xml
 <layout b="&#x9;" h="1" type="dip" index="index*.txt" />
+```
 
 After saving, open the **Web Services** menu for the source format and locate the **Standard POST URL**.
 
@@ -160,6 +161,20 @@ Click **Remap** and configure the following field mappings:
 Example field mappings screen:
 
 ![Field mappings](../images/slate/field-mappings.png)
+
+### Custom field columns
+
+ZIP files for **GPA Reports** and **Digital Evaluations** also include one extra column in `index.txt` for each custom field your organization defines in Scholaro. Each column is named after the custom field and appears in the field's sort order, after the `Filename` column.
+
+You can map these columns in the same **Remap** screen. For example, if your organization collects an **Application ID** custom field, map that column to the Slate field you use as the record key so files attach to the right record.
+
+!!! note
+    The `email` column is the email address of the Scholaro user who created the report, not the applicant's email. A custom field such as an application ID is usually a more reliable way to match records.
+
+Keep the following in mind:
+
+- A custom field that is only shown on one report type is blank on rows for the other report type.
+- Renaming a custom field in Scholaro renames its column. After a rename, open the source format and **Remap** the new column in Slate.
 
 ### Prompt value mappings
 
